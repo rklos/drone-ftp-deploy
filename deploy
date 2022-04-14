@@ -1,0 +1,59 @@
+#!/usr/bin/env node
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
+const argv = yargs(hideBin(process.argv))
+  .boolean('debug')
+  .boolean('sftp')
+  .boolean('secure')
+  .boolean('cleanDir')
+  .env('PLUGIN')
+  .argv;
+
+const FtpDeploy = require('ftp-deploy');
+const ftpDeploy = new FtpDeploy();
+
+const config = {
+  user: argv.ftpUsername,
+  // Password optional, prompted if none given
+  password: argv.ftpPassword,
+  host: argv.ftpHostname,
+  port: argv.ftpPort || 21,
+  localRoot: process.env.PWD + (argv.srcDir || '/'),
+  remoteRoot: argv.destDir || '/',
+  include: argv.include?.split(',') || [ '**/*' ],
+  exclude: argv.exclude?.split(',') || [],
+  // delete ALL existing files at destination before uploading, if true
+  deleteRemote: !!argv.cleanDir,
+  forcePasv: true,
+  // use sftp or ftp
+  sftp: !!argv.sftp,
+  // use ftps or ftp
+  secure: !!argv.secure,
+};
+
+if (argv.debug) {
+  console.log('Deploy with config:');
+  console.log(
+    JSON.stringify(
+      {
+        ...config,
+        // Replace password in logs for security reasons
+        password: config.password && '*****',
+      },
+      null,
+      2),
+  );
+}
+
+ftpDeploy.on('uploaded', (data) => {
+  console.log(data.filename, 'uploaded!');
+});
+
+ftpDeploy.on('upload-error', (data) => {
+  console.log(data.err);
+});
+
+ftpDeploy
+  .deploy(config)
+  .then((res) => console.log('finished:', res))
+  .catch((err) => console.log(err));

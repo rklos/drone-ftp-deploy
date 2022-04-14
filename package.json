@@ -1,0 +1,32 @@
+{
+  "name": "drone-ftp-deploy",
+  "version": "1.0.0",
+  "description": "Another plugin for deploy to SFTP/FTP/FTPS server from Drone CI build",
+  "main": "deploy",
+  "scripts": {
+    "deploy": "node deploy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rklos/drone-ftp-deploy.git"
+  },
+  "keywords": [
+    "ftp",
+    "ftps",
+    "drone",
+    "ci",
+    "deploy",
+    "build"
+  ],
+  "author": "Radosław Kłos <radoslaw@klos.dev>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rklos/drone-ftp-deploy/issues"
+  },
+  "homepage": "https://github.com/rklos/drone-ftp-deploy#readme",
+  "dependencies": {
+    "ftp-deploy": "2.4.2",
+    "yargs": "17.4.1"
+  }
+}
