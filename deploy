@@ -32,12 +32,12 @@ const config = {
 };
 
 if (argv.debug) {
-  console.log('Deploy with config:');
+  console.log('DEPLOY CONFIG:');
   console.log(
     JSON.stringify(
       {
         ...config,
-        // Replace password in logs for security reasons
+        // Replace password for security reasons
         password: config.password && '*****',
       },
       null,
@@ -45,15 +45,31 @@ if (argv.debug) {
   );
 }
 
+console.log('---');
+console.log('DEPLOY STARTED');
+console.log('---');
+
 ftpDeploy.on('uploaded', (data) => {
-  console.log(data.filename, 'uploaded!');
+  console.log('[ UPLOADED ]', data.filename);
 });
 
 ftpDeploy.on('upload-error', (data) => {
-  console.log(data.err);
+  console.log('[ ERROR ]', data.filename);
+  if (argv.debug) {
+    console.log(data.err);
+  }
 });
 
 ftpDeploy
   .deploy(config)
-  .then((res) => console.log('finished:', res))
-  .catch((err) => console.log(err));
+  .then(() => {
+    console.log('---');
+    console.log('DEPLOY FINISHED');
+    console.log('---');
+  })
+  .catch((err) => {
+    console.log('---');
+    console.log('DEPLOY FAILED');
+    console.log('---');
+    console.log(err)
+  });
