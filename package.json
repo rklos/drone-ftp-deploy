@@ -1,7 +1,7 @@
 {
   "name": "drone-ftp-deploy",
   "version": "1.0.0",
-  "description": "Yet another plugin for deploy to SFTP/FTP/FTPS server from Drone CI build",
+  "description": "Yet another plugin for deploy to SFTP/FTP/FTPS server from Drone CI pipeline",
   "main": "deploy",
   "scripts": {
     "deploy": "node deploy",

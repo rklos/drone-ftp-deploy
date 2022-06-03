@@ -1,5 +1,5 @@
 ## drone-ftp-deploy
-Yet another plugin for deploy to SFTP/FTP/FTPS server from Drone CI build
+Yet another plugin for deploy to SFTP/FTP/FTPS server from Drone CI pipeline
 
 ## Usage
 Create a new [step](https://docs.drone.io/yaml/docker/#the-step-object) inside your `.drone.yml`
